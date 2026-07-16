@@ -14,7 +14,7 @@ const mainServer = express();
 // ---- config server -----------
 // Middleware =================================
 mainServer.use(cors({
-    origin: ['http://localhost:5173', 'http://localhost:3000/'],
+    origin: ['http://localhost:5173', 'http://localhost:3000/', 'https://front-chat-71nt.onrender.com/'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
