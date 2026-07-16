@@ -9,17 +9,17 @@ export const serviceSing = async (userData, res) => {
     const query = 'SELECT * FROM login WHERE LOWER(nombre) = $1 AND password = $2';
     
     return conex.query(query, [name, password]).then(async (result) => {
-        const rows = result[0];
+        const rows = result.rows; // <-- antes: result[0]
         if (!rows || rows.length === 0) {
             return { message: 'No se encontraron los datos enviados.', status: false, data: [] };
         }
 
         const usuarioValido = rows[0];
-        const payload = { name: usuarioValido.nombre};
-        const infoExport = { name: usuarioValido.nombre, role: usuarioValido.role};
+        const payload = { name: usuarioValido.nombre };
+        const infoExport = { name: usuarioValido.nombre, role: usuarioValido.role };
 
-        const token = generateToken(payload, 'token', '15m'); // 15 Minutos
-        const refresToken = generateToken(payload, 'refreshToken', '1d'); // 1 Día
+        const token = generateToken(payload, 'token', '15m');
+        const refresToken = generateToken(payload, 'refreshToken', '1d');
         
         middlewareToken(token, refresToken, res);
         
@@ -37,7 +37,7 @@ export const serviceRegister = (userData) => {
 
         const query = 'SELECT * FROM login WHERE LOWER(nombre) = ?';
         conex.query(query, [name]).then((result) => {
-            if (result[0].length > 0) {
+            if (result.rows.length > 0) {
                 return resolve({ message: 'Ya existe un usuario registrado con ese nombre.', state: false });
             }
 
