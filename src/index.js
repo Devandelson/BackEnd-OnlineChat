@@ -36,7 +36,11 @@ const serverHttp = createServer(mainServer);
 
 const socketEnv = new Server(serverHttp, {
     cors: {
-        origin: ['http://localhost:5173', 'http://localhost:3000/'],
+        origin: [
+            'http://localhost:5173',
+            'http://localhost:3000',
+            'https://front-chat-71nt.onrender.com'
+        ],
         credentials: true
     }
 });
