@@ -6,7 +6,7 @@ export const serviceSing = async (userData, res) => {
     name = String(name).trim().toLocaleLowerCase();
     password = String(password);
 
-    const query = 'SELECT * FROM login WHERE LOWER(nombre) = ? AND password = ?';
+    const query = 'SELECT * FROM login WHERE LOWER(nombre) = $1 AND password = $2';
     
     return conex.query(query, [name, password]).then(async (result) => {
         const rows = result[0];
@@ -41,7 +41,7 @@ export const serviceRegister = (userData) => {
                 return resolve({ message: 'Ya existe un usuario registrado con ese nombre.', state: false });
             }
 
-            const queryInsert = 'INSERT INTO login (`nombre`, `password`, `role`) VALUES (?, ?, "user")';
+            const queryInsert = 'INSERT INTO login (`nombre`, `password`, `role`) VALUES ($1, $2, "user")';
             conex.query(queryInsert, [name, password])
                 .then(() => {
                     return resolve({ message: 'Usuario registrado correctamente', state: true });

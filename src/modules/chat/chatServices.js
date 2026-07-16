@@ -13,7 +13,7 @@ export const getChats = () => {
 
 export const getItemChat = (nameChat) => {
     return new Promise((resolve, reject) => {
-        const query = 'SELECT * FROM chat WHERE nombre_chat = ?';
+        const query = 'SELECT * FROM chat WHERE nombre_chat = $1';
         conex.query(query, [nameChat]).then((result) => {
             resolve(result[0]);
         }).catch((error) => {
@@ -26,7 +26,7 @@ export const editChat = (body) => {
     return new Promise((resolve, reject) => {
         const { nombre_chat, conversaciones } = body;
         const arrayConversation = JSON.stringify(conversaciones);
-        const query = 'UPDATE chat SET conversaciones = ? WHERE nombre_chat = ?';
+        const query = 'UPDATE chat SET conversaciones = $1 WHERE nombre_chat = $2';
         conex.query(query, [arrayConversation, nombre_chat]).then((result) => {
             resolve(result[0]);
         }).catch((error) => {
@@ -38,7 +38,7 @@ export const editChat = (body) => {
 // ---- HandleManageChat
 export const createChat = (nombre_chat) => {
     return new Promise((resolve, reject) => {
-        const query = 'INSERT INTO chat (nombre_chat, conversaciones, estado) VALUES (?, ?, 1)';
+        const query = 'INSERT INTO chat (nombre_chat, conversaciones, estado) VALUES ($1, $2, 1)';
         conex.query(query, [nombre_chat, JSON.stringify([])]).then((result) => {
             resolve(result[0]);
         }).catch((error) => {
@@ -49,7 +49,7 @@ export const createChat = (nombre_chat) => {
 
 export const deleteChat = (nombre_chat) => {
     return new Promise((resolve, reject) => {
-        const query = 'DELETE FROM chat WHERE nombre_chat = ?';
+        const query = 'DELETE FROM chat WHERE nombre_chat = $1';
         conex.query(query, [nombre_chat]).then((result) => {
             resolve(result[0]);
         }).catch((error) => {
