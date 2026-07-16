@@ -10,19 +10,20 @@ export function generateToken(user, typeToken, time) {
 }
 
 export function middlewareToken(token, refreshToken, res) {
-    const isProduction = process.env.environment === 'production';
+    // const isProduction = process.env.environment === 'production';
+    const isProduction = true;
     
     res.cookie('accessToken', token, {
         httpOnly: true,
         secure: isProduction,
-        sameSite: isProduction ? 'strict' : 'lax',
+        sameSite: 'none',
         maxAge: 15 * 60 * 1000 // 🕒 15 Minutos
     });
 
     res.cookie('refreshToken', refreshToken, {
         httpOnly: true,
         secure: isProduction,
-        sameSite: isProduction ? 'strict' : 'lax',
+        sameSite: 'none',
         maxAge: 24 * 60 * 60 * 1000 // 🕒 1 Día
     });
 
@@ -48,7 +49,7 @@ export function validToken(req, res, next) {
             res.cookie('accessToken', newToken, {
                 httpOnly: true,
                 secure: isProduction,
-                sameSite: isProduction ? 'strict' : 'lax',
+                sameSite: 'none',
                 maxAge: 15 * 60 * 1000
             });
 
