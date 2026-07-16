@@ -1,7 +1,12 @@
 import 'dotenv/config';
-import mysql from 'mysql2';
+import pkg from 'pg';
+const { Pool } = pkg;
 
-const conex = mysql.createConnection(process.env.DATABASE_URL);
- 
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false
+    }
+});
 
-export default conex.promise();
+export default pool;

@@ -68,7 +68,7 @@ serverHttp.listen(mainServer.get('port'), () => {
 
 // Conex
 conex.connect().then(() => {
-    console.log('exito!! C:.');
+    console.log('Se ha conectado a al base de datos con exito!.');
 }).catch((error) => {
     console.log('Muy mal revisa la cadena de conexión o configuración', error);
 });
